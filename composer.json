@@ -1,0 +1,30 @@
+{
+    "name": "difra/lib-db",
+    "description": "SQL database adapter library",
+    "type": "library",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Ed Kutuev",
+            "email": "ed@napych.com"
+        }
+    ],
+    "dist": {
+        "url": "https://github.com/difra-org/lib-db/archive/1.0.0.zip",
+        "type": "zip"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:difra-org/lib-db.git"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src/DB.php"
+        ],
+        "psr-4": {
+            "Difra\\Cache\\": "src/DB"
+        }
+    }
+}
