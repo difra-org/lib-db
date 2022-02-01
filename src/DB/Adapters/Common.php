@@ -134,7 +134,6 @@ abstract class Common
                 ]
             );
         } catch (\Exception $ex) {
-            \Difra\DB\Exception::sendNotification($ex);
             throw new \Difra\DB\Exception(
                 'Database connection failed' . (Debugger::isEnabled() ? ' (' . $ex->getMessage() . ')' : '')
             );
