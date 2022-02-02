@@ -29,9 +29,9 @@ class DB
             return self::$adapters[$instance];
         }
 
-        $cfg = self::getConfig();
-        if (empty($cfg)) {
-            throw new \Difra\DB\Exception("DB configuration is not available");
+        $cfg = Config::getInstance()->get('db');
+        if (empty($cfg) || empty($cfg[$instance])) {
+            throw new \Difra\DB\Exception("DB configuration '$instance' is not available");
         }
         if (!isset($cfg[$instance]) and $instance != 'default') {
             return self::$adapters[$instance] = self::getInstance();
@@ -42,19 +42,6 @@ class DB
             'sqlite' => self::$adapters[$instance] = new Sqlite($cfg[$instance]),
             default => throw new \Difra\DB\Exception("PDO adapter not found for '{$type}'"),
         };
-    }
-
-    /**
-     * Get configuration
-     * @return array|null
-     */
-    private static function getConfig(): ?array
-    {
-        static $cfg = null;
-        if (is_null($cfg)) {
-            $cfg = Config::getInstance()->get('db') ?? false;
-        }
-        return $cfg ?: null;
     }
 
     /**
