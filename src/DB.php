@@ -33,9 +33,6 @@ class DB
         if (empty($cfg) || empty($cfg[$instance])) {
             throw new \Difra\DB\Exception("DB configuration '$instance' is not available");
         }
-        if (!isset($cfg[$instance]) and $instance != 'default') {
-            return self::$adapters[$instance] = self::getInstance();
-        }
         $type = strtolower($cfg[$instance]['type'] ?? 'none');
         return match ($type) {
             'mysql' => self::$adapters[$instance] = new MySQL($cfg[$instance]),
