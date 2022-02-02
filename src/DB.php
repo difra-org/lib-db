@@ -30,13 +30,17 @@ class DB
         }
 
         $cfg = self::getConfig();
+        if (empty($cfg)) {
+            throw new \Difra\DB\Exception("DB configuration is not available");
+        }
         if (!isset($cfg[$instance]) and $instance != 'default') {
             return self::$adapters[$instance] = self::getInstance();
         }
-        return match (strtolower($cfg[$instance]['type'])) {
+        $type = strtolower($cfg[$instance]['type'] ?? 'none');
+        return match ($type) {
             'mysql' => self::$adapters[$instance] = new MySQL($cfg[$instance]),
             'sqlite' => self::$adapters[$instance] = new Sqlite($cfg[$instance]),
-            default => throw new \Difra\DB\Exception("PDO adapter not found for '{$cfg[$instance]['type']}'"),
+            default => throw new \Difra\DB\Exception("PDO adapter not found for '{$type}'"),
         };
     }
 
