@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Difra\DB\Adapters;
 
+use Difra\DB\Exception;
 use Difra\Debugger;
 
 /**
@@ -33,7 +34,7 @@ abstract class Common
      */
     public static function isAvailable(): bool
     {
-        throw new \Difra\DB\Exception(get_called_class() . '::isAvailable() is not defined');
+        throw new Exception(get_called_class() . '::isAvailable() is not defined');
     }
 
     /**
@@ -50,7 +51,7 @@ abstract class Common
     public function __construct(array $conf)
     {
         if (!static::isAvailable()) {
-            throw new \Difra\DB\Exception("PDO adapter is not usable: {$conf['type']}");
+            throw new Exception("PDO adapter is not usable: {$conf['type']}");
         }
         $this->config = $conf;
     }
@@ -134,7 +135,7 @@ abstract class Common
                 ]
             );
         } catch (\Exception $ex) {
-            throw new \Difra\DB\Exception(
+            throw new Exception(
                 'Database connection failed' . (Debugger::isEnabled() ? ' (' . $ex->getMessage() . ')' : '')
             );
         }
